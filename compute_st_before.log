@@ -1,0 +1,89 @@
+Traceback (most recent call last):
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/create_st.py", line 273, in infer
+    self._run_inference()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/create_st.py", line 264, in _run_inference
+    self._create_output_stores()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/create_st.py", line 206, in _create_output_stores
+    self.output_store = root_store.create_dataset(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Group' object has no attribute 'create_dataset'
+Using user-specified patch size: (31, 128, 128)
+
+--- Initializing Structure Tensor Inferer ---
+Initializing Inferer with output_dir: '/Users/george/Projects/fable-5.1-vesuvius/work/st_before2.zarr'
+
+--- Starting Structure Tensor Computation ---
+  Chunk occupancy cache HIT (sidecar:/Users/george/Projects/fable-5.1-vesuvius/data/PHerc1447_20250703025628_surface_crop_31x512x512.zarr/.chunk_occupancy.npz): 16/16 (100.0%) chunks occupied for /Users/george/Projects/fable-5.1-vesuvius/data/PHerc1447_20250703025628_surface_crop_31x512x512.zarr
+Creating output store at: /Users/george/Projects/fable-5.1-vesuvius/work/st_before2.zarr
+Full volume shape: (6, 31, 512, 512)
+Chunk shape: (6, 31, 128, 128)
+An error occurred during inference: 'Group' object has no attribute 'create_dataset'
+No GPUs available. Running on CPU.
+
+--- Single GPU/CPU Structure Tensor Processing ---
+Running Part 0 on GPU CPU: /Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/bin/python3 -m vesuvius.structure_tensor.create_st --input_dir /Users/george/Projects/fable-5.1-vesuvius/data/PHerc1447_20250703025628_surface_crop_31x512x512.zarr --output_dir /Users/george/Projects/fable-5.1-vesuvius/work/st_before2.zarr --mode structure-tensor --num_parts 1 --part_id 0 --device cpu --sigma 2.0 --structure-tensor-only --overlap 0.0 --step_size 1.0 --patch_size 31,128,128 --batch_size 1 --num-workers 0 --zarr-compressor zstd --zarr-compression-level 3
+
+--- Structure Tensor Processing Completed Successfully ---
+Output saved to: /Users/george/Projects/fable-5.1-vesuvius/work/st_before2.zarr
+
+--- Running Eigenanalysis ---
+Traceback (most recent call last):
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 737, in getitem
+    return await get_node(
+           ^^^^^^^^^^^^^^^
+        store=store_path.store, path=store_path.path, zarr_format=self.metadata.zarr_format
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 3563, in get_node
+    return await _get_node_v3(store=store, path=path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 3537, in _get_node_v3
+    metadata = await _read_metadata_v3(store=store, path=path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 3376, in _read_metadata_v3
+    raise FileNotFoundError(path)
+FileNotFoundError: structure_tensor
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/bin/vesuvius.compute_st", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/run_create_st.py", line 523, in main
+    ok = run_eigenanalysis(
+        zarr_path=zarr_path,
+    ...<4 lines>...
+        num_workers=args.num_workers,
+    )
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/run_create_st.py", line 215, in run_eigenanalysis
+    _finalize_structure_tensor_torch(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        zarr_path=zarr_path,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        keep_eigen=getattr(run_eigenanalysis, "_keep_eigen", False),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/structure_tensor/create_st.py", line 568, in _finalize_structure_tensor_torch
+    src = root_store['structure_tensor']
+          ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 1843, in __getitem__
+    obj = self._sync(self._async_group.getitem(path))
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/sync.py", line 203, in _sync
+    return sync(
+        coroutine,
+        timeout=config.get("async.timeout"),
+    )
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/sync.py", line 158, in sync
+    raise return_result
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/sync.py", line 118, in _runner
+    return await coro
+           ^^^^^^^^^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py", line 741, in getitem
+    raise KeyError(key) from e
+KeyError: 'structure_tensor'
