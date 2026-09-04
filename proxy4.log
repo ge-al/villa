@@ -1,0 +1,90 @@
+[proxy] listening on 8767, truncating 3% of chunk responses (seed 11)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.11.13 (30841/92524 bytes)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.12.13 (48520/145562 bytes)
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55929)
+Traceback (most recent call last):
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 1321, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              encode_chunked=req.has_header('Transfer-encoding'))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1367, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1413, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1362, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1122, in _send_output
+    self.send(msg)
+    ~~~~~~~~~^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1066, in send
+    self.connect()
+    ~~~~~~~~~~~~^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1501, in connect
+    super().connect()
+    ~~~~~~~~~~~~~~~^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/client.py", line 1032, in connect
+    self.sock = self._create_connection(
+                ~~~~~~~~~~~~~~~~~~~~~~~^
+        (self.host,self.port), self.timeout, self.source_address)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/socket.py", line 850, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/socket.py", line 987, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/server.py", line 498, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/http/server.py", line 484, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/work/truncating_proxy.py", line 15, in do_GET
+    def do_GET(self): self._do(head=False)
+                      ~~~~~~~~^^^^^^^^^^^^
+  File "/Users/george/Projects/fable-5.1-vesuvius/work/truncating_proxy.py", line 20, in _do
+    with urllib.request.urlopen(req, timeout=60) as r:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 487, in open
+    response = self._open(req, data)
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 1369, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/george/.local/share/uv/python/cpython-3.14.6-macos-aarch64-none/lib/python3.14/urllib/request.py", line 1324, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+----------------------------------------
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.14.14 (168846/506540 bytes)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.14.12 (163134/489403 bytes)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.14.12 (163134/489403 bytes)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.16.12 (99635/298907 bytes)
+[proxy] TRUNCATED /PHerc1447/segments/20250703025628-auto_grown_20250703025628283/surface-volumes/8.64um-1.2m-116keV-volume-20250521151220.zarr/0/0.15.13 (169306/507920 bytes)
