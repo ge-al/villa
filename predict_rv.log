@@ -1,0 +1,53 @@
+/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/core/group.py:3289: ZarrUserWarning: Object at metadata.json is not recognized as a component of a Zarr hierarchy.
+  warnings.warn(
+/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/src/vesuvius/data/zarr_chunk_index.py:134: UserWarning: Failed to read chunk occupancy cache at s3://vesuvius-challenge-open-data/PHerc1447/volumes/20250521151220-8.640um-1.2m-116keV-masked.zarr/0/.chunk_occupancy.npz: Unable to locate credentials
+  warnings.warn(f"Failed to read chunk occupancy cache at {url}: {e}")
+/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/api/asynchronous.py:1236: ZarrRuntimeWarning: The `write_empty_chunks` keyword argument is deprecated and will be removed in future versions. To control whether empty chunks are written to storage, either use the `config` keyword argument, as in `config={'write_empty_chunks': True}`,or change the global 'array.write_empty_chunks' configuration variable.
+  _warn_write_empty_chunks_kwarg()
+/Users/george/Projects/fable-5.1-vesuvius/villa/vesuvius/.venv/lib/python3.14/site-packages/zarr/api/asynchronous.py:1029: ZarrRuntimeWarning: The `write_empty_chunks` keyword argument is deprecated and will be removed in future versions. To control whether empty chunks are written to storage, either use the `config` keyword argument, as in `config={'write_empty_chunks': True}`,or change the global 'array.write_empty_chunks' configuration variable.
+  _warn_write_empty_chunks_kwarg()
+Using user-specified patch size: (128, 128, 128)
+Restricting inference to bbox (z0,z1,y0,y1,x0,x1): (4900, 5156, 3600, 3856, 4100, 4356)
+
+--- Initializing Inferer ---
+Initializing Inferer with output_dir: '/Users/george/Projects/fable-5.1-vesuvius/work/pred_rv'
+
+--- Starting Inference ---
+Loading model from /Users/george/Projects/fable-5.1-vesuvius/checkpoints/surface_recto_verso, fold 0
+Starting load_model for /Users/george/Projects/fable-5.1-vesuvius/checkpoints/surface_recto_verso, fold=0, device=cpu
+Loading checkpoint: /Users/george/Projects/fable-5.1-vesuvius/checkpoints/surface_recto_verso/fold_0/checkpoint_final.pth
+Checkpoint metadata: trainer_name=nnUNetTrainerMedialSurfaceRecall, configuration=3d_fullres_bs4
+nnUNet_raw is not defined and nnU-Net can only be used on data for which preprocessed files are already present on your system. nnU-Net cannot be used for experiment planning and preprocessing like this. If this is not intended, please read documentation/setting_up_paths.md for information on how to set this up properly.
+nnUNet_preprocessed is not defined and nnU-Net can not be used for preprocessing or training. If this is not intended, please read documentation/setting_up_paths.md for information on how to set this up.
+nnUNet_results is not defined and nnU-Net cannot be used for training or inference. If this is not intended behavior, please read documentation/setting_up_paths.md for information on how to set this up.
+Resolved trainer nnUNetTrainerMedialSurfaceRecall from nnunetv2.training.nnUNetTrainer.variants.loss.nnUNetTrainerSkeletonRecall
+Detected multiclass model with 4 classes
+  Chunk occupancy cache HIT (local:/Users/george/.cache/vesuvius/chunk_occupancy/959aef5bb8a19892524aa79062046c77797ab19d.npz): 184681/827640 (22.3%) chunks occupied for s3://vesuvius-challenge-open-data/PHerc1447/volumes/20250521151220-8.640um-1.2m-116keV-masked.zarr/0
+Creating output store at: /Users/george/Projects/fable-5.1-vesuvius/work/pred_rv/logits_part_0.zarr
+Created zarr array at /Users/george/Projects/fable-5.1-vesuvius/work/pred_rv/logits_part_0.zarr with shape (27, 4, 128, 128, 128)
+Creating coordinates store at: /Users/george/Projects/fable-5.1-vesuvius/work/pred_rv/coordinates_part_0.zarr
+Created coordinates zarr array at /Users/george/Projects/fable-5.1-vesuvius/work/pred_rv/coordinates_part_0.zarr with shape (27, 3)
+Inferring Part 0:   0%|          | 0/27 [00:00<?, ?it/s]Inferring Part 0:   4%|▎         | 1/27 [00:07<03:18,  7.65s/it]Inferring Part 0:   7%|▋         | 2/27 [00:16<03:31,  8.45s/it]Inferring Part 0:  11%|█         | 3/27 [00:26<03:39,  9.13s/it]Inferring Part 0:  15%|█▍        | 4/27 [00:36<03:33,  9.29s/it]Inferring Part 0:  19%|█▊        | 5/27 [00:45<03:21,  9.18s/it]Inferring Part 0:  22%|██▏       | 6/27 [00:56<03:27,  9.89s/it]Inferring Part 0:  26%|██▌       | 7/27 [01:09<03:39, 10.97s/it]Inferring Part 0:  30%|██▉       | 8/27 [01:17<03:11, 10.09s/it]Inferring Part 0:  33%|███▎      | 9/27 [01:28<03:02, 10.14s/it]Inferring Part 0:  37%|███▋      | 10/27 [01:36<02:43,  9.61s/it]Inferring Part 0:  41%|████      | 11/27 [01:46<02:38,  9.89s/it]Inferring Part 0:  44%|████▍     | 12/27 [01:57<02:29,  9.96s/it]Inferring Part 0:  48%|████▊     | 13/27 [02:07<02:20, 10.03s/it]Inferring Part 0:  52%|█████▏    | 14/27 [02:16<02:07,  9.81s/it]Inferring Part 0:  56%|█████▌    | 15/27 [02:27<02:00, 10.06s/it]Inferring Part 0:  59%|█████▉    | 16/27 [02:36<01:48,  9.82s/it]Inferring Part 0:  63%|██████▎   | 17/27 [02:48<01:43, 10.33s/it]Inferring Part 0:  67%|██████▋   | 18/27 [02:59<01:36, 10.71s/it]Inferring Part 0:  70%|███████   | 19/27 [03:10<01:26, 10.85s/it]Inferring Part 0:  74%|███████▍  | 20/27 [03:21<01:15, 10.80s/it]Inferring Part 0:  78%|███████▊  | 21/27 [03:31<01:03, 10.51s/it]Inferring Part 0:  81%|████████▏ | 22/27 [03:42<00:53, 10.70s/it]Inferring Part 0:  85%|████████▌ | 23/27 [03:53<00:43, 10.79s/it]Inferring Part 0:  89%|████████▉ | 24/27 [04:05<00:33, 11.30s/it]Inferring Part 0:  93%|█████████▎| 25/27 [04:16<00:22, 11.16s/it]Inferring Part 0:  96%|█████████▋| 26/27 [04:28<00:11, 11.31s/it]Inferring Part 0: 100%|██████████| 27/27 [04:39<00:00, 11.09s/it]Inferring Part 0: 100%|██████████| 27/27 [04:39<00:00, 10.33s/it]
+
+--- Inference Finished ---
+Output logits saved to: /Users/george/Projects/fable-5.1-vesuvius/work/pred_rv/logits_part_0.zarr
+
+--- Inspecting Output Store ---
+Output shape: (27, 4, 128, 128, 128)
+Output dtype: float16
+Output chunks: (1, 4, 128, 128, 128)
+
+--- Empty Patches Report ---
+  Empty Patches Skipped: 0
+  Total Available Positions: 27
+
+--- Inspecting Coordinate Store ---
+Coords shape: (27, 3)
+Coords dtype: int32
+First few coordinates:
+[[4859 3539 4044]
+ [4859 3539 4171]
+ [4859 3539 4297]
+ [4859 3665 4044]
+ [4859 3665 4171]]
+EXIT=0
