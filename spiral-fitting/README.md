@@ -47,6 +47,56 @@ specifically):
 }
 ```
 
+## Running a fit from the published `spiral_datasets` alone
+
+Measured by @jonmarrs in #1655 (PHercParis4, one RTX 4090: 38,442 patches
+load in ~90 s, theta topology ~114 s, 30,000 steps in 1 h 34 m at 5.3 it/s,
+65.4 % satisfied patches, peak host RSS 7.8 GiB). Four things stand between
+the published directory and a running fit; none of them is an error in the
+data, but none of them is announced by the tool either.
+
+1. **Fetch only what the default configuration loads.** `lasagna_inputs/`
+   ships 47.5 GiB of resident-pool sidecars; the defaults read one of them:
+
+   | sidecar | size | loaded by default |
+   |---|---:|---|
+   | `las_008_nx.ome.zarr.respool_g4_pair` | 11 GB | yes |
+   | `las_008_grad_mag.ome.zarr.respool_g4` | 4.8 GB | no (`dense_spacing_mode` is `winding_model`, not `grad_mag`) |
+   | `las_008_surf_sdt.ome.zarr.respool_g1` | 33 GB | no (`input_use_surf_sdt` is `False`) |
+
+   A working fetch is about 13 GB. Note that `config.get("dense_spacing_mode",
+   "phase")` in the code is the fallback for an *absent* key, not the default;
+   the default set in `Config` is `winding_model`.
+
+2. **Write the `spiral-scroll.json` yourself.** It is required (see above) and
+   is not published with the datasets (404 on PHercParis4, PHerc0125,
+   PHerc0332). Four keys are enough when every other input keeps its
+   conventional directory name:
+
+   ```json
+   {"schema_version": 1, "name": "s1", "voxel_size_um": 9.6,
+    "spiral_outward_sense": "CW",
+    "paths": {"winding_inference": "winding_model"}}
+   ```
+
+   `spiral_outward_sense` has to be read off the CT (see the section above);
+   the value in this example is the one a converged PHercParis4 fit was
+   consistent with, not an independently verified fact.
+
+3. **`winding_inference` is published under a different name.** The default
+   `dense_spacing_mode = "winding_model"` needs the `winding_inference` input,
+   which the datasets ship as `winding_model/` (its manifest says
+   `artifact_type: "winding_inference_crossings"`). `winding_inference` is a
+   supported `paths` override key, hence the entry in the manifest above.
+
+4. **Turn off the default-on inputs the datasets do not ship.**
+   `input_use_pcl_drawn_control_points` (default `True`; `drawn_control_points.json`
+   is absent from every published dataset) and `input_use_fibers` (default
+   `True`; there is no published directory under the conventional name
+   `fibers`). `input_use_tracks` is off by default; leave it off unless you
+   fetched `tracks/` (35+ GB). Pass these in your run configuration JSON
+   (see `configs/no_fibers.json` and `configs/no_tracks.json` for the shape).
+
 ## Sweep runner output
 
 `runners/run_sweep.py` prefixes each active fit's live `PROGRESS` and
