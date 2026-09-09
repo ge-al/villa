@@ -33,6 +33,7 @@ from vesuvius.utils.utils import pad_or_crop_3d
 from ..augmentation.pipelines import create_training_transforms
 from ..training.normalization import get_normalization
 from .zarr_dataset import PatchInfo
+from vesuvius.models.datasets.zarr_dataset import _reject_auxiliary_targets
 
 
 logger = logging.getLogger(__name__)
@@ -108,6 +109,7 @@ class CrossFrameZarrDataset(Dataset):
             )
 
         self.targets = getattr(mgr, "targets", {}) or {}
+        _reject_auxiliary_targets(self.targets, "CrossFrameZarrDataset")
         self.target_names = [
             name for name, info in self.targets.items()
             if not info.get("auxiliary_task", False)

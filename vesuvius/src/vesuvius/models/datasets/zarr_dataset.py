@@ -56,6 +56,27 @@ class PatchInfo:
     safe_boundary: Optional[Tuple[int, ...]] = None
 
 
+def _reject_auxiliary_targets(targets, dataset_name: str) -> None:
+    """Fail at startup when auxiliary_tasks are configured for a dataset that
+    cannot produce their targets.
+
+    ConfigManager registers ``auxiliary_tasks`` (distance_transform,
+    surface_normals) as extra targets with ``auxiliary_task: true``. This
+    dataset filters them out of ``target_names`` and has no code to derive
+    the tensors, so the auxiliary heads were built, consumed memory, and
+    trained against nothing, reporting ``Avg Loss = 0.0000`` every epoch with
+    no warning (#1490). Raise instead of training dead heads.
+    """
+    aux = [name for name, info in (targets or {}).items() if info.get("auxiliary_task", False)]
+    if aux:
+        raise ValueError(
+            f"{dataset_name} cannot generate targets for auxiliary_tasks {aux}: "
+            "the configured auxiliary heads would train against nothing and report "
+            "loss 0.0000 (#1490). Remove `auxiliary_tasks` from the config, or use a "
+            "dataset that derives distance_transform / surface_normals targets."
+        )
+
+
 class ZarrDataset(Dataset):
     """
     PyTorch Dataset for 3D volumetric data stored in OME-Zarr format.
@@ -99,6 +120,7 @@ class ZarrDataset(Dataset):
         self.data_path = Path(mgr.data_path)
         self.patch_size = tuple(mgr.train_patch_size)
         self.targets = getattr(mgr, 'targets', {})
+        _reject_auxiliary_targets(self.targets, "ZarrDataset")
         self.target_names = [
             name for name, info in self.targets.items()
             if not info.get("auxiliary_task", False)
