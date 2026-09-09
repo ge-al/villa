@@ -98,10 +98,32 @@ def find_target_images(root: Path) -> list[Path]:
     return matches
 
 
+_MAX_CHANNELS = 4  # grey+alpha, RGB, RGBA: anything wider is not a channel axis
+
+
+def _reject_multipage_tiff(path: Path) -> None:
+    """A multi-page label TIFF cannot be converted meaningfully; say so.
+
+    ``tifffile.imread`` stacks pages into a ``(pages, H, W)`` array and the
+    channel squeeze below then took ``[..., 0]``: a 5-page 40x60 label came
+    out as a 5x40 image with no error (#1738). Reject it with the page count.
+    """
+    if path.suffix.lower() not in {".tif", ".tiff"}:
+        return
+    with tifffile.TiffFile(path) as tif:
+        n_pages = len(tif.pages)
+    if n_pages > 1:
+        raise ValueError(
+            f"{path} is a multi-page TIFF ({n_pages} pages); create_label_zarrs "
+            "expects one 2D label image per file. Export a single page (or one "
+            "file per page) and rerun."
+        )
+
+
 def _normalize_to_2d(image: np.ndarray, source_path: Path) -> np.ndarray:
     image = np.squeeze(np.asarray(image))
-    if image.ndim == 3:
-        image = image[..., 0]
+    if image.ndim == 3 and image.shape[-1] <= _MAX_CHANNELS:
+        image = image[..., 0]  # channel-last grey/RGB(A): keep the first channel
     if image.ndim != 2:
         raise ValueError(
             f"Expected a 2D image at {source_path}, but got shape={tuple(image.shape)}"
@@ -113,7 +135,7 @@ def _normalized_2d_shape(
     shape: Sequence[int], source_path: Path
 ) -> tuple[int, int]:
     squeezed = tuple(dimension for dimension in shape if dimension != 1)
-    if len(squeezed) == 3:
+    if len(squeezed) == 3 and squeezed[-1] <= _MAX_CHANNELS:
         squeezed = squeezed[:-1]
     if len(squeezed) != 2:
         raise ValueError(
@@ -125,6 +147,7 @@ def _normalized_2d_shape(
 def load_image(path: Path) -> np.ndarray:
     """Read a TIFF or PNG as one contiguous two-dimensional array."""
     if path.suffix.lower() in {".tif", ".tiff"}:
+        _reject_multipage_tiff(path)
         image = tifffile.imread(path)
     else:
         image = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
@@ -254,6 +277,7 @@ def _get_tiled_tiff_metadata(
 ) -> tuple[tuple[int, int], np.dtype] | None:
     if path.suffix.lower() not in {".tif", ".tiff"}:
         return None
+    _reject_multipage_tiff(path)
     with tifffile.TiffFile(path) as tif:
         page = tif.pages[0]
         if not page.is_tiled:
